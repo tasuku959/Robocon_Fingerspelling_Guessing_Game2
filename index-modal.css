@@ -1,0 +1,100 @@
+:root {
+  --overlay-bg: rgba(0, 0, 0, 0.2);
+  --cell-hover: rgba(15, 117, 255, 0.25);
+}
+
+.yubimozi-kit {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.yubimozi-kit img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.yubimozi-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.yubimozi-cell {
+  position: absolute;
+  width: 10%;
+  height: 20%;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  pointer-events: auto;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.yubimozi-cell:hover,
+.yubimozi-cell:focus {
+  outline: none;
+  border-color: rgba(0, 112, 255, 0.6);
+  background-color: var(--cell-hover);
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+#modal-video {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  background: #000;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 95%;
+  }
+
+  .modal-close {
+    top: 0.4rem;
+    right: 0.4rem;
+  }
+}

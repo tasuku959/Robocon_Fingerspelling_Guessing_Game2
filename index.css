@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #fff;
+}
+
+
+
+
+
+/* ヘッダー */
+header {
+  height: 65px;
+  width: 100%;
+  background-color: rgba(34, 49, 52, 0.9);
+  position: fixed;  /* 要素を画面上の指定した位置に固定 */
+  top: 0px;
+  z-index: 10;  /* 要素の重なりの順序を指定 値が大きいほど上に表示される */
+}
+
+.logo {    /* JSLSlロゴ */
+  width: 100px;
+  margin-top: 0px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.logo:hover{    /* 画像にマウスを乗せると起こる変化 */
+  transform: scale(1.1);
+  opacity: 0.7;
+}
+
+.header-left{
+  float: left;
+}
+
+.back_button_wrap {    /* ツールチップ */
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  bottom: -75%; /* ボタンの上に表示 */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 9999;
+}
+
+.back_button_wrap:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.header-right{
+  float: right;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.5s;
+}
+
+.header-right:hover{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.header-right a{
+  line-height: 65px;
+  padding: 0 25px;
+  color: white;
+  display: block;
+}
+
+
+
+
+/* 上背景 */
+.top-bg{
+  background-size: 80%;
+}
+
+/* 下背景 */
+.bottom-bg {
+  background-size: cover;
+  height: 100px;
+}
+
+/* メインエリア */
+.main {
+  padding: 2em 1em;
+}
+
+.main h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+/* ゲームボタンレイアウト */
+.lesson-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 3em;
+  margin-bottom: 2em;
+}
+
+.lesson {
+  width: 220px;
+}
+
+.game-button {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+}

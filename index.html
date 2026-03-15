@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>指文字クイズ</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="index-modal.css">
+
+  <style>
+    /* モーダル用スタイル */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+    }
+
+    .modal-content button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* かんたん、むずかしいのボタン */
+    .easy{
+      background-color: #70ef50;
+      border: 1px solid #1ac400;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .normal{
+      background-color: #f8e88e;
+      border: 1px solid #f4c400;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .hard{
+      background-color: #f88eb3;
+      border: 1px solid #f401ab;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .button-row {  /* default horizontal */
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .vertical-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* responsive adjustments */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      h2 { font-size: 1.2em; }
+      button {
+        font-size: 1.2em;
+        padding: 8px 16px;
+      }
+      .button-row,
+      .vertical-stack { width: 100%; }
+      .button-row.vertical-stack button { width: 80%; }
+      #scoreTimer { font-size: 16px; }
+    }
+    @media (min-width: 601px) and (max-width: 1024px) {
+      /* tablet styles */
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      button {
+        font-size: 1.4em;
+        padding: 10px 18px;
+      }
+      .button-row.vertical-stack button { width: 60%; }
+      #scoreTimer { font-size: 18px; }
+    }
+    @media (min-width: 1025px) {
+      .button-row.vertical-stack button { width: auto; }
+    }
+
+    .button-row button {
+      flex: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="top-bg">
+    <img src="Class_List_Top_Image.png" alt="">
+  </div>
+
+  <div class="main">
+    <h1>指文字クイズ</h1>
+        <p>指文字の読み取る力UP<br>トレーニング</p>
+
+    <div class="lesson-wrapper vertical-stack">
+      <h2>難易度をお選びください。</h2>
+      <div class="button-row vertical-stack">
+        <button onclick="location.href='Fingerspelling_Guessing_Game/easy/Finger-spelling-game-easy.html'" class="easy">かんたん</button>
+        <button onclick="location.href='Fingerspelling_Guessing_Game/normal/Finger-spelling-game-normal.html'" class="normal">ふつう</button>
+        <button onclick="location.href='Fingerspelling_Guessing_Game/hard/Finger-spelling-game-hard.html'" class="hard">むずかしい</button>
+      </div>
+      <div style="margin-top:20px; text-align:center; width:100%; max-width: 800px; margin-left:auto; margin-right:auto;">
+        <div class="yubimozi-kit" id="yubimozi-kit">
+          <img id="yubimozi-img" src="yubimozi2.png" alt="指文字画像" />
+          <div class="yubimozi-overlay" id="yubimozi-overlay"></div>
+        </div>
+        <p style="margin-top: 8px; font-size: 1.95rem; color: #333;">※相手から見た形<br>指文字をクリックすると、動画が表示されます</p>
+      </div>
+    </div>
+    
+    <!-- 指文字をクリックした後のモーダルウィンドウ -->
+    <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button id="modal-close" class="modal-close" aria-label="閉じる">✕</button>
+        <h2 id="modal-title">指文字動画</h2>
+        <div id="modal-media" class="modal-media">
+          <video id="modal-video" controls autoplay muted playsinline style="display:none; width: 100%; height: auto;"></video>
+          <div id="modal-video-fallback">動画ファイルが設定されていません。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-bg"></div>
+
+
+
+  <script src="index-modal.js" defer></script>
+  <script>
+  </script>
+</body>
+</html>
+<!-- テストコメント -->
