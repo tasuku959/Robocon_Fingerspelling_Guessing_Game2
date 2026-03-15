@@ -208,15 +208,15 @@
       nextQuestion();
     }
 
-    function getRandomKanaWord() {
-      const length = Math.floor(Math.random() * 3) + 3; // 3〜5文字
-      let word = '';
-      for (let i = 0; i < length; i++) {
-        const kana = kanaList[Math.floor(Math.random() * kanaList.length)];
-        word += kana;
-      }
-      return word;
-    }
+function getRandomKanaWord() {
+  const length = 3; // 3文字固定
+  let word = '';
+  for (let i = 0; i < length; i++) {
+    const kana = kanaList[Math.floor(Math.random() * kanaList.length)];
+    word += kana;
+  }
+  return word;
+}
 
 function nextQuestion() {
   if (!unlimited && timeLeft <= 0) {
