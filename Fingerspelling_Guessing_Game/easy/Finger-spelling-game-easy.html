@@ -1,378 +1,421 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>指文字当てゲーム（かんたん）</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin: 30px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 16px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>指文字当てゲーム（かんたん）</title>
 
-    h1 {
-      background: #eee;
-      padding: 10px;
-      display: inline-block;
-      border: 1px solid #aaa;
-      font-size: 1.8rem;
-    }
+<style>
 
-    .choices {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
+body{
+font-family:sans-serif;
+text-align:center;
+margin:30px;
+max-width:1200px;
+margin-left:auto;
+margin-right:auto;
+padding:0 16px;
+}
 
-    .choice img {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(to bottom, #3ac, #2a8);
-      border-radius: 5px;
-    }
+h1{
+background:#eee;
+padding:10px;
+display:inline-block;
+border:1px solid #aaa;
+font-size:1.8rem;
+}
 
-    #answer-area {
-      margin-top: 20px;
-      display: none;
-    }
+.choices{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:20px;
+flex-wrap:wrap;
+}
 
-    #answerInput {
-      font-size: 20px;
-      padding: 10px;
-      width: 300px;
-      border: 2px solid green;
-      text-align: center;
-    }
+.choice img{
+width:100px;
+height:100px;
+background:linear-gradient(to bottom,#3ac,#2a8);
+border-radius:5px;
+}
 
-    button {
-      font-size: 18px;
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-    }
+#answer-area{
+margin-top:20px;
+display:none;
+}
 
-    #result, #summary {
-      margin-top: 20px;
-      font-size: 18px;
-    }
+#answerInput{
+font-size:20px;
+padding:10px;
+width:300px;
+border:2px solid green;
+text-align:center;
+}
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
+button{
+font-size:18px;
+padding:10px 20px;
+margin:10px;
+cursor:pointer;
+}
 
-    #nextButton {
-      display: none;
-      margin-top: 20px;
-    }
+#result,#summary{
+margin-top:20px;
+font-size:18px;
+}
 
-    .footer-buttons {
-      margin-top: 30px;
-    }
+ul{
+list-style:none;
+padding:0;
+}
 
-    .footer-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 3em;
-      margin-top: 2em;
-    }
+#nextButton{
+display:none;
+}
 
-    .back-button  /* 戻る、ホームボタン */{
-      font-size: 1.0em;
-      text-decoration: none;
-      color: #000;
-    }
+/* ボタンエリア */
 
-    /*.back-button, .home-button {
-      margin: 0 10px;
-      text-decoration: none;
-      font-size: 18px;
-      padding: 10px 20px;
-      border: 1px solid #aaa;
-      border-radius: 5px;
-      background-color: #f0f0f0;
-      color: #000;
-    }
+.game-buttons{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:20px;
+}
 
-    .back-button:hover, .home-button:hover {
-      background-color: #ddd;
-    }*/
+.footer-buttons{
+display:flex;
+justify-content:center;
+gap:3em;
+margin-top:2em;
+}
 
-    /* 共通レスポンシブ */
-    #answerInput { width: min(90%, 360px); }
-    .choices .choice img { width: min(22vw, 100px); height: auto; }
-    button { width: auto; min-width: 120px; }
+.back-button{
+font-size:1em;
+text-decoration:none;
+color:#000;
+}
 
-    @media (max-width: 768px) {
-      body { margin: 14px; padding: 0 10px; }
-      h1 { font-size: 1.5rem; }
-      p { font-size: 14px; }
-      .choices { gap: 10px; }
-      .choices .choice img { width: 24vw; max-width: 80px; }
-      button { width: 100%; font-size: 16px; padding: 10px; margin: 6px 0; }
-      #scoreTimer { font-size: 16px; }
-      #answerInput { font-size: 18px; width: 90%; }
-      .footer-buttons { gap: 1rem; }
-    }
+/* 共通レスポンシブ */
 
-    @media (min-width: 769px) and (max-width: 1024px) {
-      body { margin: 20px; padding: 0 16px; }
-      h1 { font-size: 1.7rem; }
-      .choices .choice img { width: min(18vw, 90px); }
-      button { font-size: 17px; padding: 9px 18px; }
-      #answerInput { width: min(80%, 400px); }
-    }
+#answerInput{
+width:min(90%,360px);
+}
 
-    @media (min-width: 1025px) {
-      body { margin: 30px; padding: 0 24px; }
-      h1 { font-size: 2rem; }
-      .choices .choice img { width: 100px; }
-      button { font-size: 18px; padding: 10px 20px; }
-      #answerInput { width: 360px; }
-    }
-  </style>
+.choices .choice img{
+width:min(22vw,100px);
+height:auto;
+}
+
+/* スマホ */
+
+@media (max-width:768px){
+
+body{
+margin:14px;
+padding:0 10px;
+}
+
+h1{
+font-size:1.5rem;
+}
+
+p{
+font-size:14px;
+}
+
+.choices{
+gap:10px;
+}
+
+.choices .choice img{
+width:24vw;
+max-width:80px;
+}
+
+button{
+width:100%;
+font-size:16px;
+padding:10px;
+margin:6px 0;
+}
+
+#scoreTimer{
+font-size:16px;
+}
+
+#answerInput{
+font-size:18px;
+width:90%;
+}
+
+/* ⭐ボタン順序を入れ替える */
+
+#nextButton{
+order:1;
+}
+
+#endButton{
+order:2;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <h1>指文字当てゲーム（かんたん）</h1>
-  <p>下記の指文字にあてはまる言葉を入力してください。<br>
-  【注意】ひらがみのみ入力お願いします。
-  </p>
+<h1>指文字当てゲーム（かんたん）</h1>
 
-  <div>
-    <button onclick="startGame(30)">30秒</button>
-    <button onclick="startGame(60)">60秒</button>
-    <button onclick="startGame(0)">無制限</button>
-  </div>
+<p>
+下記の指文字にあてはまる言葉を入力してください。<br>
+【注意】ひらがみのみ入力お願いします。
+</p>
 
-  <!-- スコアとタイマー表示 -->
-  <div id="scoreTimer" style="margin-top:20px; font-size:18px;">
-    <span id="scoreDisplay">Score: 0</span> &nbsp;|&nbsp; <span id="timer">Time left: 0s</span>
-  </div>
+<div>
+<button onclick="startGame(30)">30秒</button>
+<button onclick="startGame(60)">60秒</button>
+<button onclick="startGame(0)">無制限</button>
+</div>
 
-  <div id="question-number"></div>
-  <div class="choices" id="choices"></div>
+<div id="scoreTimer" style="margin-top:20px;font-size:18px;">
+<span id="scoreDisplay">Score:0</span>
+&nbsp;|&nbsp;
+<span id="timer">Time left:0s</span>
+</div>
 
-  <div id="answer-area">
-    <input type="text" id="answerInput" placeholder="回答欄">
-    <button onclick="submitAnswer()">回答</button>
-  </div>
+<div id="question-number"></div>
+<div class="choices" id="choices"></div>
 
-  <div id="result"></div>
-  <button id="endButton" style="display:none;" onclick="endGame()">終了</button>
-  <button id="nextButton" onclick="nextQuestion()">次の問題へ進む</button>
+<div id="answer-area">
+<input type="text" id="answerInput" placeholder="回答欄">
+<button onclick="submitAnswer()">回答</button>
+</div>
 
-  <div id="summary"></div>
+<div id="result"></div>
 
-  <script>
-    const kanaList = [
-      'あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','や','ゆ','よ','ら','り','る','れ','ろ','わ','を','ん','ー','ゃ','ゅ','っ','が','ぎ','ぐ','げ','ご','ざ','じ','ず','ぜ','ぞ','だ','ぢ','づ','で','ど','ば','び','ぶ','べ','ぼ','ぱ','ぴ','ぷ','ぺ','ぽ'
-    ];
+<div class="game-buttons">
+<button id="endButton" style="display:none;" onclick="endGame()">終了</button>
+<button id="nextButton" onclick="nextQuestion()">次の問題へ進む</button>
+</div>
 
-    let currentQuestion = 0;
-    let totalQuestions = 0; // will be set at end equal to questions answered
-    let correctCount = 0;
-    let score = 0;
-    let currentWord = "";
-    let history = [];
-    let timeLeft;
-    let timerInterval;
-    let unlimited = false;
+<div id="summary"></div>
 
-    function startGame(limit) {
-      currentQuestion = 0;
-      totalQuestions = 0;
-      correctCount = 0;
-      score = 0;
-      history = [];
-      unlimited = limit === 0;
-      timeLeft = unlimited ? 0 : limit;
-      stopTimer();
-      document.getElementById('summary').innerHTML = '';
-      document.getElementById('result').textContent = '';
-      document.getElementById('choices').innerHTML = '';
-      document.getElementById('question-number').textContent = '';
-      document.getElementById('answer-area').style.display = 'none';
-      document.getElementById('nextButton').style.display = 'none';
-      document.getElementById('endButton').style.display = unlimited ? 'inline-block' : 'none';
-      updateScore();
-      updateTimerDisplay();
-      if (!unlimited) startTimer();
-      nextQuestion();
-    }
+<script>
 
-function getRandomKanaWord() {
-  const length = 3; // 3文字固定
-  let word = '';
-  for (let i = 0; i < length; i++) {
-    const kana = kanaList[Math.floor(Math.random() * kanaList.length)];
-    word += kana;
-  }
-  return word;
+const kanaList=[
+'あ','い','う','え','お','か','き','く','け','こ',
+'さ','し','す','せ','そ','た','ち','つ','て','と',
+'な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ',
+'ま','み','む','め','も','や','ゆ','よ','ら','り',
+'る','れ','ろ','わ','を','ん'
+];
+
+let currentQuestion=0;
+let totalQuestions=0;
+let correctCount=0;
+let score=0;
+let currentWord="";
+let history=[];
+let timeLeft;
+let timerInterval;
+let unlimited=false;
+
+function startGame(limit){
+
+currentQuestion=0;
+totalQuestions=0;
+correctCount=0;
+score=0;
+history=[];
+
+unlimited=limit===0;
+timeLeft=unlimited?0:limit;
+
+stopTimer();
+
+document.getElementById('summary').innerHTML='';
+document.getElementById('result').textContent='';
+document.getElementById('choices').innerHTML='';
+document.getElementById('question-number').textContent='';
+
+document.getElementById('answer-area').style.display='none';
+document.getElementById('nextButton').style.display='none';
+document.getElementById('endButton').style.display=unlimited?'inline-block':'none';
+
+updateScore();
+updateTimerDisplay();
+
+if(!unlimited)startTimer();
+
+nextQuestion();
+
 }
 
-function nextQuestion() {
-  if (!unlimited && timeLeft <= 0) {
-    totalQuestions = currentQuestion;
-    showSummary();
-    return;
-  }
+function getRandomKanaWord(){
 
-  document.getElementById('result').textContent = '';
-  document.getElementById('answerInput').value = '';
-  document.getElementById('question-number').textContent = `問題 ${currentQuestion + 1}`;
-  document.getElementById('answer-area').style.display = 'block';
+const length=3;
+let word='';
 
-  // 回答後に表示されるボタン
-  const nextButton = document.getElementById('nextButton');
-  nextButton.textContent = '次の問題へ進む';
-  nextButton.style.display = 'none';
+for(let i=0;i<length;i++){
 
-  currentWord = getRandomKanaWord();
+const kana=kanaList[Math.floor(Math.random()*kanaList.length)];
+word+=kana;
 
-  const choiceContainer = document.getElementById('choices');
-  choiceContainer.innerHTML = '';
-  for (let i = 0; i < currentWord.length; i++) {
-    const kana = currentWord[i];
-    const img = document.createElement('img');
-    img.src = `../Finger_Spelling_Image_Compressed/${kana.normalize('NFD')}.png`;
-    img.alt = kana;
-    const div = document.createElement('div');
-    div.className = 'choice';
-    div.appendChild(img);
-    choiceContainer.appendChild(div);
-  }
-
-  currentQuestion++;
 }
 
-    function submitAnswer() {
-      const input = document.getElementById('answerInput').value.trim();
-      const isCorrect = input === currentWord;
-      document.getElementById('result').textContent = isCorrect ? "正解！🎉" : `不正解！😢 正解は「${currentWord}」`;
+return word;
 
-      history.push({
-        question: currentWord,
-        answer: input,
-        isCorrect: isCorrect
-      });
+}
 
-      if (isCorrect) {
-        correctCount++;
-        score += 10;
-        updateScore();
-      }
-      document.getElementById('nextButton').style.display = 'inline-block';
-      document.getElementById('answer-area').style.display = 'none';
-    }
+function nextQuestion(){
 
-    function showSummary() {
-      const incorrect = totalQuestions - correctCount;
-      const rate = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
-      let summary = `<h2>結果</h2>
-        <p>スコア：${score}点</p>
-        <p>正解：${correctCount}問 / ${totalQuestions}問</p>
-        <p>正解率：${rate}%</p>
-        <ul>`;
+if(!unlimited && timeLeft<=0){
 
-      history.forEach((q, i) => {
-        summary += `<li>第${i + 1}問：${q.isCorrect ? '⭕' : '❌'}（入力：${q.answer} ／ 正解：${q.question}）</li>`;
-      });
+totalQuestions=currentQuestion;
+showSummary();
+return;
 
-      summary += '</ul>';
-      document.getElementById('summary').innerHTML = summary;
-      document.getElementById('choices').innerHTML = '';
-      document.getElementById('question-number').textContent = '';
-      document.getElementById('result').textContent = '';
-      document.getElementById('answer-area').style.display = 'none';
-      document.getElementById('nextButton').style.display = 'none';
-      document.getElementById('summary').innerHTML = summary;
-      saveRanking(score, correctCount, totalQuestions);
-      const rankingHtml = renderRanking();
-      document.getElementById('summary').innerHTML = summary + rankingHtml;
-    }
-    // スコア・タイマー・ランキング機能
-    const TIME_LIMIT = 60;
+}
 
-    function updateScore() {
-      document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
-    }
+document.getElementById('result').textContent='';
+document.getElementById('answerInput').value='';
 
-    function updateTimerDisplay() {
-      document.getElementById('timer').textContent = unlimited ? '無制限' : `Time left: ${timeLeft}s`;
-    }
+document.getElementById('question-number').textContent=`問題 ${currentQuestion+1}`;
 
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          totalQuestions = currentQuestion;
-          showSummary();
-        }
-      }, 1000);
-    }
+document.getElementById('answer-area').style.display='block';
 
-    function stopTimer() {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-      }
-    }
+document.getElementById('nextButton').style.display='none';
 
-    function getRanking() {
-      return JSON.parse(localStorage.getItem('rankingEasy') || '[]');
-    }
+currentWord=getRandomKanaWord();
 
-    function saveRanking(score, correct, total) {
-      const list = getRanking();
-      list.push({ score, correct, total, date: new Date().toLocaleString() });
-      list.sort((a, b) => b.score - a.score);
-      if (list.length > 10) list.splice(10);
-      localStorage.setItem('rankingEasy', JSON.stringify(list));
-    }
+const choiceContainer=document.getElementById('choices');
+choiceContainer.innerHTML='';
 
-    function renderRanking() {
-      const list = getRanking();
-      if (list.length === 0) return '';
-      let html = '<h3>ランキング</h3><ol>';
-      list.forEach(e => {
-        html += `<li>${e.score}点 （${e.correct}/${e.total}問） ${e.date}</li>`;
-      });
-      html += '</ol>';
-      return html;
-    }
-    function endGame() {
-      totalQuestions = currentQuestion;
-      showSummary();
-    }
+for(let i=0;i<currentWord.length;i++){
 
-    // Enterキーで回答を送信／次の問題へ移動
-    document.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter') return;
+const kana=currentWord[i];
 
-      const answerArea = document.getElementById('answer-area');
-      const nextButton = document.getElementById('nextButton');
+const img=document.createElement('img');
 
-      if (answerArea && answerArea.style.display !== 'none') {
-        submitAnswer();
-      } else if (nextButton && nextButton.style.display !== 'none') {
-        nextQuestion();
-      }
-    });
-  </script>
+img.src=`../Finger_Spelling_Image_Compressed/${kana}.png`;
 
-  <!-- 戻るボタン -->
-  <div class="footer-buttons">
-    <a href="../../index.html" class="back-button">← 戻る</a>
-  </div>
+img.alt=kana;
+
+const div=document.createElement('div');
+
+div.className='choice';
+
+div.appendChild(img);
+
+choiceContainer.appendChild(div);
+
+}
+
+currentQuestion++;
+
+}
+
+function submitAnswer(){
+
+const input=document.getElementById('answerInput').value.trim();
+
+const isCorrect=input===currentWord;
+
+document.getElementById('result').textContent=
+isCorrect?"正解！🎉":`不正解😢 正解は「${currentWord}」`;
+
+history.push({
+question:currentWord,
+answer:input,
+isCorrect:isCorrect
+});
+
+if(isCorrect){
+
+correctCount++;
+score+=10;
+updateScore();
+
+}
+
+document.getElementById('nextButton').style.display='inline-block';
+document.getElementById('answer-area').style.display='none';
+
+}
+
+function showSummary(){
+
+totalQuestions=currentQuestion;
+
+const rate=Math.round((correctCount/totalQuestions)*100);
+
+let summary=`<h2>結果</h2>
+<p>スコア：${score}点</p>
+<p>正解：${correctCount}/${totalQuestions}</p>
+<p>正解率：${rate}%</p><ul>`;
+
+history.forEach((q,i)=>{
+
+summary+=`<li>第${i+1}問：${q.isCorrect?'⭕':'❌'}（入力:${q.answer} 正解:${q.question}）</li>`;
+
+});
+
+summary+='</ul>';
+
+document.getElementById('summary').innerHTML=summary;
+
+}
+
+function updateScore(){
+
+document.getElementById('scoreDisplay').textContent=`Score:${score}`;
+
+}
+
+function updateTimerDisplay(){
+
+document.getElementById('timer').textContent=
+unlimited?'無制限':`Time left:${timeLeft}s`;
+
+}
+
+function startTimer(){
+
+timerInterval=setInterval(()=>{
+
+timeLeft--;
+updateTimerDisplay();
+
+if(timeLeft<=0){
+
+clearInterval(timerInterval);
+showSummary();
+
+}
+
+},1000);
+
+}
+
+function stopTimer(){
+
+if(timerInterval)clearInterval(timerInterval);
+
+}
+
+function endGame(){
+
+showSummary();
+
+}
+
+</script>
+
+<div class="footer-buttons">
+<a href="../../index.html" class="back-button">← 戻る</a>
+</div>
 
 </body>
 </html>
